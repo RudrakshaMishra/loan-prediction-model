@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+env/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local datasets (do NOT upload CSVs)
+*.csv
+
+# Cache folders
+*.ipynb_checkpoints

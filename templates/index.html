@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Prediction</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .container { max-width: 450px; margin: auto; }
+        input, select {
+            width: 100%; padding: 10px; margin: 8px 0;
+        }
+        button {
+            width: 100%; padding: 10px; background: #4CAF50;
+            color: white; border: none; cursor: pointer;
+        }
+        h2 { color: purple; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Loan Default Prediction</h1>
+
+        <form action="/predict" method="POST">
+
+            <label>Loan Amount</label>
+            <input type="number" name="loan_amnt" 
+                   value="{{ request.form.loan_amnt }}" required>
+
+            <label>Term</label>
+            <select name="term">
+                <option {% if request.form.term == "36 months" %}selected{% endif %}>36 months</option>
+                <option {% if request.form.term == "60 months" %}selected{% endif %}>60 months</option>
+            </select>
+
+            <label>Interest Rate (%)</label>
+            <input type="number" step="0.01" name="int_rate"
+                   value="{{ request.form.int_rate }}" required>
+
+            <label>Employment Length</label>
+            <select name="emp_length">
+                {% set e = request.form.emp_length %}
+                <option {% if e == "1 year" %}selected{% endif %}>1 year</option>
+                <option {% if e == "2 years" %}selected{% endif %}>2 years</option>
+                <option {% if e == "3 years" %}selected{% endif %}>3 years</option>
+                <option {% if e == "5 years" %}selected{% endif %}>5 years</option>
+                <option {% if e == "10+ years" %}selected{% endif %}>10+ years</option>
+                <option {% if e == "Unknown" %}selected{% endif %}>Unknown</option>
+            </select>
+
+            <label>Home Ownership</label>
+            <select name="home_ownership">
+                {% set h = request.form.home_ownership %}
+                <option {% if h == "OWN" %}selected{% endif %}>OWN</option>
+                <option {% if h == "RENT" %}selected{% endif %}>RENT</option>
+                <option {% if h == "MORTGAGE" %}selected{% endif %}>MORTGAGE</option>
+            </select>
+
+            <label>Annual Income</label>
+            <input type="number" name="annual_inc"
+                   value="{{ request.form.annual_inc }}" required>
+
+            <label>Purpose</label>
+            <select name="purpose">
+                {% set p = request.form.purpose %}
+                <option {% if p == "credit_card" %}selected{% endif %}>credit_card</option>
+                <option {% if p == "car" %}selected{% endif %}>car</option>
+                <option {% if p == "home_improvement" %}selected{% endif %}>home_improvement</option>
+                <option {% if p == "debt_consolidation" %}selected{% endif %}>debt_consolidation</option>
+                <option {% if p == "small_business" %}selected{% endif %}>small_business</option>
+                <option {% if p == "major_purchase" %}selected{% endif %}>major_purchase</option>
+                <option {% if p == "medical" %}selected{% endif %}>medical</option>
+                <option {% if p == "wedding" %}selected{% endif %}>wedding</option>
+                <option {% if p == "vacation" %}selected{% endif %}>vacation</option>
+                <option {% if p == "moving" %}selected{% endif %}>moving</option>
+            </select>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <h2>{{ prediction }}</h2>
+    </div>
+</body>
+</html>
